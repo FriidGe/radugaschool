@@ -1,0 +1,8 @@
+<div class="updateUser">
+        <label>Выберите учащегося</label>
+        <select class="form-control userClick">
+            {% for item in pupils %}
+                <option value="{{ item.id }}">{{ item.fullName }}</option>
+            {% endfor %}
+        </select>
+</div>

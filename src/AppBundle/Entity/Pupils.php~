@@ -1,0 +1,90 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Pupils
+ *
+ * @ORM\Table(name="pupils", indexes={@ORM\Index(name="teachers_id", columns={"teachers_id"}), @ORM\Index(name="parents_id", columns={"parents_id"}), @ORM\Index(name="class_id", columns={"class_id"})})
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PupilsRepository")
+ */
+class Pupils
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="full_name", type="string", length=255, nullable=false)
+     */
+    private $fullName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=255, nullable=false)
+     */
+    private $address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="phone", type="string", length=15, nullable=false)
+     */
+    private $phone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=50, nullable=false)
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=255, nullable=false)
+     */
+    private $password;
+
+    /**
+     * @var \Teachers
+     *
+     * @ORM\ManyToOne(targetEntity="Teachers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="teachers_id", referencedColumnName="id")
+     * })
+     */
+    private $teachers;
+
+    /**
+     * @var \Parents
+     *
+     * @ORM\ManyToOne(targetEntity="Parents")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="parents_id", referencedColumnName="id")
+     * })
+     */
+    private $parents;
+
+    /**
+     * @var \Userclass
+     *
+     * @ORM\ManyToOne(targetEntity="Userclass")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="class_id", referencedColumnName="id")
+     * })
+     */
+    private $class;
+
+
+}

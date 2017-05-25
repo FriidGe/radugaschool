@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/app/css/bootstrap.min.css') }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('bundles/app/css/bootstrap-theme.min.css') }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('bundles/app/css/style.css') }}" type="text/css" />
+        <style>
+            body{
+                margin-top: 10px;
+            }
+        </style>
+        <script src="{{ asset('bundles/app/js/jquery-3.1.1.min.js') }}"></script>
+        <script src="{{ asset('bundles/app/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/app/js/notify.js') }}"></script>
+    </head>
+    <body>
+    <div id="home" class="header two">
+        <div class="top-header two">
+            <div class="container">
+                <div class="logo">
+                    <a href="/home"><h1>Радужская<span>Школа</span></h1></a>
+                </div>
+                <!----start-top-nav---->
+                <div class="top-menu">
+                    <span class="menu"> </span>
+                    <ul class="cl-effect-16">
+                        <li><a href="/home" data-hover="Домой">Домой</a></li>
+                        <li><a href="gallery.html" data-hover="Галерея">Галерея</a></li>
+                        <li><a href="contact.html" data-hover="Контакты">Контакты</a></li>
+                        <li><a class="active" href="" data-hover="Электронный дневник">Электронный дневник</a></li>
+                        <div class="clearfix"></div>
+                    </ul>
+                </div>
+                <!-- script-for-menu -->
+                <script>
+                    $("span.menu").click(function(){
+                        $(".top-menu ul").slideToggle("slow" , function(){
+                        });
+                    });
+                </script>
+                <!-- script-for-menu -->
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+    <div class="container">
+        {% if app.session.get("login") is not empty %}
+            <div class="row">
+                <div class="header-rightside">
+                    <ul class="list-inline header-top pull-right">
+                        <li>Здравствуйте, <strong>{{ app.session.get("login") }}</strong></li>
+                        <li>
+                            <form action="{{ path("reset") }}">
+                                <button class="btn btn-danger" type="submit">
+                                    <span class="glyphicon glyphicon-share"></span></button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+        {% block body %}
+        {% endblock %}
+    </div>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

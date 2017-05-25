@@ -1,0 +1,149 @@
+{% extends "::base.html.twig" %}
+{% block title %}Электронный дневник{% endblock %}
+
+{% block body %}
+    <div class="row text-center">
+        <h3>Электронный дневник</h3>
+        <h4>{{ number }} {{ letter }} класс</h4>
+    </div>
+    <div class="row" style="margin-bottom: 15px">
+        <div class="col-md-4 text-center">
+            <form action="/pupils/{{ id }}" method="post">
+                <button type="submit" class="btn btn-warning" name="date" value="{{ prevWeek }}"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Предыдущая неделя</button>
+            </form>
+        </div>
+        <div class="col-md-4 text-center">
+            <h5>Неделя с {{ firstDay|date("d-m-Y") }} по {{ lastDay|date("d-m-Y") }}</h5>
+            <form action="/pupilRasp/{{ id }}" method="post">
+                <button type="submit" class="btn btn-info" name="date"><span class="glyphicon glyphicon-list-alt"></span> Посмотреть успеваемость</button>
+            </form>
+        </div>
+        <div class="col-md-4 text-center">
+            <form action="/pupils/{{ id }}" method="post">
+                <button type="submit" class="btn btn-success" name="date" value="{{ nextWeek }}">Следующая неделя&nbsp;&nbsp;<span class="glyphicon glyphicon-arrow-right"></span> </button>
+            </form>
+        </div>
+    </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                Понедельник <label> {{ firstDay|date("d.m") }}</label>
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>№</th>
+                        <th>Предмет</th>
+                        <th>Домашнее задание</th>
+                        <th>Оценка</th>
+                    <tr>
+                        {% for item in monday %}
+                    <tr>
+                        <td>{{ item.priority }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.homework }}</td>
+                        <td>{{ item.mark }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-md-6">
+                Четверг <label> {{ firstDay|date_modify("+3 day")|date("d.m") }}</label>
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>№</th>
+                        <th>Предмет</th>
+                        <th>Домашнее задание</th>
+                        <th>Оценка</th>
+                    <tr>
+                        {% for item in thursday %}
+                    <tr>
+                        <td>{{ item.priority }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.homework }}</td>
+                        <td>{{ item.mark }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                Вторник <label> {{ firstDay|date_modify("+1 day")|date("d.m") }}</label>
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>№</th>
+                        <th>Предмет</th>
+                        <th>Домашнее задание</th>
+                        <th>Оценка</th>
+                    <tr>
+                    {% for item in tuesday %}
+                    <tr>
+                        <td>{{ item.priority }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.homework }}</td>
+                        <td>{{ item.mark }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-md-6">
+                Пятница <label> {{ lastDay|date("d.m") }}</label>
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>№</th>
+                        <th>Предмет</th>
+                        <th>Домашнее задание</th>
+                        <th>Оценка</th>
+                    <tr>
+                    {% for item in friday %}
+                        <tr>
+                        <td>{{ item.priority }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.homework }}</td>
+                        <td>{{ item.mark }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                Среда <label> {{ firstDay|date_modify("+2 day")|date("d.m") }}</label>
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>№</th>
+                        <th>Предмет</th>
+                        <th>Домашнее задание</th>
+                        <th>Оценка</th>
+                    <tr>
+                        {% for item in wednesday %}
+                    <tr>
+                        <td>{{ item.priority }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.homework }}</td>
+                        <td>{{ item.mark }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-md-6">
+                <label>Замечания</label>
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>Дата</th>
+                        <th>Предмет</th>
+                        <th>Замечание</th>
+                    <tr>
+                        {% for item in notes %}
+                    <tr>
+                        <td>{{ item.date|date("d.m") }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.note }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

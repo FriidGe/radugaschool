@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+	<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+	<link rel="stylesheet" href="{{ asset('bundles/app/css/bootstrap.min.css') }}" type="text/css" />
+	<link rel="stylesheet" href="{{ asset('bundles/app/css/bootstrap-theme.min.css') }}" type="text/css" />
+	<link rel="stylesheet" href="{{ asset('bundles/app/css/style.css') }}" type="text/css" />
+	<style>
+		body{
+			margin-top: 10px;
+		}
+	</style>
+	<script src="{{ asset('bundles/app/js/jquery-3.1.1.min.js') }}"></script>
+	<script src="{{ asset('bundles/app/js/bootstrap.min.js') }}"></script>
+	<script src="{{ asset('bundles/app/js/notify.js') }}"></script>
+</head>
+<body>
+<!----- start-header---->
+<div id="home" class="header">
+	<div class="top-header">
+		<div class="container">
+			<div class="logo">
+				<a href="/home"><h1>Радужская<span>Школа</span></h1></a>
+			</div>
+			<div class="top-menu">
+				<span class="menu"> </span>
+				<ul class="cl-effect-16">
+					<li><a class="active" href="/home" data-hover="Домой">Домой</a></li>
+					<li><a href="/gallery" data-hover="Галерея">Галерея</a></li>
+					<li><a href="/contacts" data-hover="Контакты">Контакты</a></li>
+					<li><a href="/login" data-hover="Электронный дневник">Электронный дневник</a></li>
+					<div class="clearfix"></div>
+				</ul>
+			</div>
+			<!-- script-for-menu -->
+			<script>
+                $("span.menu").click(function(){
+                    $(".top-menu ul").slideToggle("slow" , function(){
+                    });
+                });
+			</script>
+			<!-- script-for-menu -->
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+
+	<div  id="top" class="callbacks_container">
+		<ul class="rslides" id="slider4">
+			<li>
+				<div class="slider-top">
+					<h2>Знания это сила</h2>
+					<p>Обучение — педагогический процесс, в результате которого учащиеся под руководством учителя овладевают знаниями, умениями и навыками, общими и специальными.</p>
+					<h6>Приветствуем каждого ребенка</h6>
+				</div>
+			</li>
+
+		</ul>
+	</div>
+	<div class="clearfix"> </div>
+</div>
+
+<!----start-slide-bottom--->
+<div class="slide-bottom">
+	<div class="slide-bottom-grids">
+		<div class="container">
+			<div class="col-md-6 slide-bottom-grid">
+				<h3>Добро пожаловать!</h3>
+				<p>Самым важным явлением в школе, самым поучительным предметом, самым живым примером для ученика является сам учитель. Он — олицетворенный метод обучения, само воплощение принципа воспитания.</p>
+			</div>
+			<div class="col-md-6 slide-bottom-grid">
+				<h3>Наша миссия</h3>
+				<p>Задачей воспитателя и учителя остается приобщить всякого ребенка к общечеловеческому развитию и сделать из него человека раньше, чем им овладеют гражданские отношения.</p>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+
+<div class="mid-bg">
+	<div class="container">
+		<div class="mid-section">
+			<h3>Первый день в школе!</h3>
+			<h4>ВЫ ГОТОВЫ ?</h4>
+			<p>Обучение — вид учебной деятельности, в которой количество и качество элементов знаний и умений ученика доводятся учителем (преподавателем) до должного уровня (среднего, эталонного, возможного), составляющего цель обучения.</p>
+		</div>
+	</div>
+</div>
+<!----footer--->
+<div class="footer">
+	<div class="container">
+		<div class="copy">
+			<p>&copy; 2017 ГГТУ им. П.О. Сухого, Орещенко Е.Н. ИТ-41 </p>
+		</div>
+
+	</div>
+</div>
+</body>
+</body>
+</html>

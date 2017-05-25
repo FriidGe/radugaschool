@@ -1,0 +1,510 @@
+{% extends "::base.html.twig" %}
+{% block title %}Успеваемость{% endblock %}
+{% block stylesheets %}
+    <link href="{{ asset('bundles/app/css/xcharts.min.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+    <div class="row text-center">
+        <h3>Успеваемость </h3>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-inline">
+                <label>Выберите месяц:</label>
+                <input type="month" class="form-control" id="dateFirst" value="2017-06">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-success" id="findR" value="{{ id }}"><span class="glyphicon glyphicon-search"></span> Показать успеваемость</button>
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-primary" id="findGraph" value="{{ id }}"><span class="glyphicon glyphicon-stats"></span> Показать статистику</button>
+        </div>
+        <div class="col-md-2">
+            <form action="/pupils/{{ id }}" method="post">
+                <button type="submit" class="btn btn-warning" name="date"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Вернуться к дневнику</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row" id="helpChart">
+        <div class="col-md-12" style="margin-top: 10px;">
+            <div id="updateTable">
+            </div>
+        </div>
+    </div>
+    <div id="placeholder" height="300px">
+        <figure id="chart"></figure>
+    </div>
+    <div id="myChart"></div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/app/js/zingchart.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            function zingchart1(values, avg, hooky, marks_count) {
+                // The tooltip shown over the chart
+                var tt = $('<div class="ex-tooltip">').appendTo('body'),
+                    topOffset = -32;
+
+                var data = {
+                    "xScale" : "time",
+                    "yScale" : "linear",
+                    "main" : [{
+                        className : ".stats",
+                        "data" : []
+                    }]
+                };
+
+                var opts = {
+                    paddingLeft : 50,
+                    paddingTop : 20,
+                    paddingRight : 10,
+                    axisPaddingLeft : 25,
+                    tickHintX: 9, // How many ticks to show horizontally
+
+
+                    "mouseover": function (d, i) {
+                        var pos = $(this).offset();
+
+                        tt.text(d.x.format('{Month} {ord}') + ': ' + d.y).css({
+
+                            top: topOffset + pos.top,
+                            left: pos.left
+
+                        }).show();
+                    },
+
+                    "mouseout": function (x) {
+                        tt.hide();
+                    }
+                };
+
+                // Create a new xChart instance, passing the type
+                zingchart.THEME="classic";
+                var myConfig = {
+                    "background-color":"#3F5666",
+                    "globals": {
+                        "font-family":"Arial",
+                        "font-weight":"normal"
+                    },
+                    "graphset":[
+                        {
+                            "type":"null",
+                            "x":"2.25%",
+                            "y":"1%",
+                            "background-color":"none",
+                            "title":{
+                                "text":"Успеваемость за месяц",
+                                "text-align":"left",
+                                "font-size":"14px",
+                                "font-color":"#ffffff",
+                                "background-color":"none"
+                            }
+                        },
+                        {
+                            "type":"null",
+                            "x":"73.75%",
+                            "y":"1%",
+                            "background-color":"none",
+                            "title":{
+                                "text":"Last Sync: Yesterday",
+                                "text-align":"right",
+                                "font-size":"11px",
+                                "font-color":"#f4f4f4",
+                                "background-color":"none"
+                            }
+                        },
+                        {
+                            "type":"pie",
+                            "height":"40%",
+                            "width":"30%",
+                            "x":"3%",
+                            "y":"10%",
+                            "background-color":"#ffffff",
+                            "border-radius":4,
+                            "title":{
+                                "text":"Средний балл",
+                                "text-align":"left",
+                                "background-color":"none",
+                                "font-color":"#000000",
+                                "font-size":"13px",
+                                "offset-y":"10%",
+                                "offset-x":"10%"
+                            },
+                            "value-box":{
+                                "visible":true
+                            },
+                            "plotarea":{
+                                "margin":"20% 0% 0% 0%"
+                            },
+                            "plot":{
+                                "slice":50,
+                                "ref-angle":270,
+                                "detach":false,
+                                "hover-state":{
+                                    "visible":false
+                                },
+                                "value-box":{
+                                    "visible":true,
+                                    "type":"first",
+                                    "connected":false,
+                                    "placement":"center",
+                                    "text":eval(avg),
+                                    "font-color":"#000000",
+                                    "font-size":"20px"
+                                },
+                                "tooltip":{
+                                    "rules":[
+                                        {
+                                            "rule":"%i == 0",
+                                            "text":"%t: %v",
+                                            "shadow":false,
+                                            "border-radius":4
+                                        },
+                                        {
+                                            "rule":"%i == 1",
+                                            "text":"%v Remaining",
+                                            "shadow":false,
+                                            "border-radius":4
+                                        }
+                                    ]
+                                },
+                                "animation":{
+                                    "delay":0,
+                                    "effect":2,
+                                    "speed":"600",
+                                    "method":"0",
+                                    "sequence":"1"
+                                }
+                            },
+                            "series":[
+                                {
+                                    "values":[eval(avg)],
+                                    "text":"Средний балл",
+                                    "background-color":"#00baf0",
+                                    "border-width":"0px",
+                                    "shadow":0
+                                },
+                                {
+                                    "values":[10 - eval(avg)],
+                                    "text":"Баллов не хватает до 10",
+                                    "background-color":"#dadada",
+                                    "alpha":"0.5",
+                                    "border-color":"#dadada",
+                                    "border-width":"1px",
+                                    "shadow":0
+                                }
+                            ]
+                        },
+                        {
+                            "type":"pie",
+                            "height":"40%",
+                            "width":"30%",
+                            "x":"35%",
+                            "y":"10%",
+                            "background-color":"#ffffff",
+                            "border-radius":4,
+                            "title":{
+                                "text":"Кол-во пропусков",
+                                "text-align":"left",
+                                "background-color":"none",
+                                "font-color":"#000000",
+                                "font-size":"13px",
+                                "offset-y":"10%",
+                                "offset-x":"10%"
+                            },
+                            "value-box":{
+                                "visible":true
+                            },
+                            "plotarea":{
+                                "margin":"20% 0% 0% 0%"
+                            },
+                            "plot":{
+                                "slice":50,
+                                "ref-angle":270,
+                                "detach":false,
+                                "hover-state":{
+                                    "visible":false
+                                },
+                                "value-box":{
+                                    "visible":true,
+                                    "type":"first",
+                                    "connected":false,
+                                    "placement":"center",
+                                    "text":eval(hooky),
+                                    "font-color":"#000000",
+                                    "font-size":"20px"
+                                },
+                                "tooltip":{
+                                    "rules":[
+                                        {
+                                            "rule":"%v >= 0",
+                                            "text":"%t: %v",
+                                            "shadow":false,
+                                            "border-radius":4
+                                        },
+                                        {
+                                            "rule":"%v >= 0",
+                                            "text":"%t: %v",
+                                            "shadow":false,
+                                            "border-radius":4
+                                        }
+                                    ]
+                                },
+                                "animation":{
+                                    "delay":0,
+                                    "effect":2,
+                                    "speed":"600",
+                                    "method":"0",
+                                    "sequence":"1"
+                                }
+                            },
+                            "series":[
+                                {
+                                    "values":[eval(hooky)],
+                                    "text":"Прогулы",
+                                    "background-color":"#8AB839",
+                                    "border-width":"0px",
+                                    "shadow":0
+                                },
+                                {
+                                    "values":[30-eval(hooky)],
+                                    "text":"До максимума:",
+                                    "background-color":"#dadada",
+                                    "alpha":"0.5",
+                                    "border-color":"#dadada",
+                                    "border-width":"1px",
+                                    "shadow":0
+                                }
+                            ]
+                        },
+                        {
+                            "type":"pie",
+                            "height":"40%",
+                            "width":"30%",
+                            "x":"67%",
+                            "y":"10%",
+                            "background-color":"#ffffff",
+                            "border-radius":4,
+                            "title":{
+                                "text":"Кол-во оценок",
+                                "text-align":"left",
+                                "background-color":"none",
+                                "font-color":"#000000",
+                                "font-size":"13px",
+                                "offset-y":"10%",
+                                "offset-x":"10%"
+                            },
+                            "value-box":{
+                                "visible":true
+                            },
+                            "plotarea":{
+                                "margin":"20% 0% 0% 0%"
+                            },
+                            "plot":{
+                                "slice":50,
+                                "ref-angle":270,
+                                "detach":false,
+                                "hover-state":{
+                                    "visible":false
+                                },
+                                "value-box":{
+                                    "visible":true,
+                                    "type":"first",
+                                    "connected":false,
+                                    "placement":"center",
+                                    "text":eval(marks_count),
+                                    "font-color":"#000000",
+                                    "font-size":"20px"
+                                },
+                                "tooltip":{
+                                    "rules":[
+                                        {
+                                            "rule":"%v >= 0",
+                                            "text":"%t: %v",
+                                            "shadow":false,
+                                            "border-radius":4
+                                        },
+                                        {
+                                            "rule":"%i == 1",
+                                            "text":"%t: %v",
+                                            "shadow":false,
+                                            "border-radius":4
+                                        }
+                                    ]
+                                },
+                                "animation":{
+                                    "delay":0,
+                                    "effect":2,
+                                    "speed":"600",
+                                    "method":"0",
+                                    "sequence":"1"
+                                }
+                            },
+                            "series":[
+                                {
+                                    "values":[eval(marks_count)],
+                                    "text":"Кол-во оценок",
+                                    "background-color":"#FABE28",
+                                    "border-width":"0px",
+                                    "shadow":0
+                                },
+                                {
+                                    "values":[113 - eval(marks_count)],
+                                    "text":"До максимума",
+                                    "background-color":"#dadada",
+                                    "border-width":"0px",
+                                    "shadow":0
+                                }
+
+                            ]
+                        },
+                        {
+                            "type":"bar",
+                            "height":"42%",
+                            "width":"94%",
+                            "x":"3%",
+                            "y":"53%",
+                            "background-color":"#ffffff",
+                            "border-radius":4,
+                            "title":{
+                                "text":"Оценки",
+                                "text-align":"left",
+                                "font-size":"13px",
+                                "font-color":"#000000",
+                                "background-color":"none",
+                                "offset-x":"10%",
+                                "offset-y":"10%"
+                            },
+                            "legend":{
+                                "toggle-action":"remove",
+                                "layout":"x3",
+                                "x":"52.5%",
+                                "shadow":false,
+                                "border-color":"none",
+                                "background-color":"none",
+                                "item":{
+                                    "font-color":"#000000"
+                                },
+                                "marker":{
+                                    "type":"circle",
+                                    "border-width":0
+                                },
+                                "tooltip":{
+                                    "text":"%plot-description"
+                                }
+                            },
+                            "tooltip":{
+                                "text":"%t<br><strong>%v</strong>",
+                                "font-size":"12px",
+                                "border-radius":4,
+                                "shadow":false,
+                                "callout":true,
+                                "padding":"5 10"
+                            },
+                            "plot":{
+                                "background-color":"#000000",
+                                "animation":{
+                                    "effect":"4"
+                                }
+                            },
+                            "plotarea":{
+                                "margin":"35% 3.5% 20% 7.5%"
+                            },
+                            "scale-x":{
+                                "values":["1","2","3","4","5","6","7","8","9","10","11","12","13", "14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
+                                "line-color":"#adadad",
+                                "line-width":"1px",
+                                "item":{
+                                    "font-size":"10px",
+                                    "offset-y":"-2%"
+                                },
+                                "guide":{
+                                    "visible":false
+                                },
+                                "tick":{
+                                    "visible":false
+                                }
+                            },
+                            "scale-y":{
+                                "values":"0:10:5",
+                                "line-color":"none",
+                                "item":{
+                                    "font-size":"10px",
+                                    "offset-x":"2%"
+                                },
+                                "guide":{
+                                    "line-style":"solid",
+                                    "line-color":"#adadad"
+                                },
+                                "tick":{
+                                    "visible":false
+                                }
+                            },
+                            "series":[
+                                {
+                                    "text":"Средняя оценка за день",
+                                    "values": values,
+                                    "background-color":"#88C100",
+                                    "description":"Средняя оценка за день",
+                                    "hover-state":{
+                                        "background-color":"#91CE00"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                };
+
+                zingchart.render({
+                    id : 'myChart',
+                    data : myConfig,
+                    height: 700,
+                    width: "100%"
+                });
+            }
+
+
+
+            // of chart a data set and the options object
+
+
+
+            // Function for loading data via AJAX and showing it on the chart
+
+
+            $("#findR").click(function () {
+                var pupil = $(this).val();
+                var date1 = $("#dateFirst").val();
+                $.ajax({
+                    url: "/findRasp",
+                    type: "POST",
+                    data: { pupil:pupil, date1:date1},
+                    response:'text',
+                    success: function(data){
+                       $('#updateTable').html(data);
+                       // ajaxLoadChart();
+                    }
+                });
+            });
+
+            $("#findGraph").click(function () {
+                var pupil = $(this).val();
+                var date1 = $("#dateFirst").val();
+                $.ajax({
+                    url: "/pupilRaspGraph",
+                    type: "POST",
+                    data: { pupil:pupil, date:date1},
+                    response:'text',
+                    success: function(data){
+                        var values = data.split(":");
+                        zingchart1(eval(values[0]), values[1], values[2], values[3]);
+                    }
+                });
+            });
+        })
+    </script>
+{% endblock %}

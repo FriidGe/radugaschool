@@ -1,0 +1,14 @@
+<div id="updateTable">
+    <table class="table table-bordered table-hover">
+        <tr>
+            <td colspan="{{ count + 1 }}" class="text-center">{{ month }}</td>
+        </tr>
+        <tr>
+            <td></td>
+        {% for item in 1.. count %}
+                <td class="text-center">{{ item }}</td>
+        {% endfor %}
+        </tr>
+        {{ progress|raw }}
+    </table>
+</div>

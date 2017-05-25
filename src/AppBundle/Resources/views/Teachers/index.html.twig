@@ -1,0 +1,147 @@
+{% extends '::base.html.twig' %}
+{% block title %}Учительская{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h3>Учительская</h3>
+        </div>
+        <div class="row">
+        <div class="col-md-2 text-center">
+            <label id="labelForSelect">Выберите класс</label>
+            <select class="form-control selectClick">
+                {% for item in classNumber %}
+                    <option value="{{ idSchool }}">{{ item.number }} {{ item.letter }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="updateUser">
+            </div>
+        </div>
+        <div class="col-md-7" style="margin-top: 25px">
+           <button class="btn btn-default" id="updateRasp" value="{{ teacher }}"><span class="glyphicon glyphicon-search"></span> Найти оценки</button>
+            <div class="btn-group">
+              <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="glyphicon glyphicon-cog"></span> Операции <span class="caret"></span>
+
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="#" id="addProg" data-id="{{ teacher }}"><span class="glyphicon glyphicon-plus-sign"></span> Добавить оценку или пометку</a></li>
+                <li><a href="#" id="addHomework"><span class="glyphicon glyphicon-pencil"></span> Добавить домашнее задание</a></li>
+                <li role="separator" class="divider"></li>
+               <li><a href="#" id="findRasp"><span class="glyphicon glyphicon-briefcase"></span> Успеваемость</a></li>
+              </ul>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 25px">
+        <div class="col-md-12">
+            <div id="updateTable">
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Изменение</h4>
+                </div>
+                <div class="modal-body">
+                    <label>Оценка</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="mark">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="edit">Сохранить</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Добавление</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Введите дату:</label>
+                        <input type="date" class="form-control" id="date1">
+                    </div>
+                    <label>Оценка (если оценка меньше 4 то будет отправлено уведомление на email)</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="mark1">
+                    </div>
+                    <label>Замечание (не обязательно)</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="note">
+                    </div>
+                    <label>Отправить уведомление </label>
+
+                        <input type="checkbox" checked  id="checked">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="add" data-dismiss="modal">Сохранить</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" id="myFindRasp" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Просмотр успеваемости</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Выберите месяц:</label>
+                        <input type="month" class="form-control" id="dateFirst">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="findR" data-dismiss="modal">Показать</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+<!-- Add HomeWork -->
+    <div class="modal fade" id="modalAddHomeWork" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Добавление</h4>
+                </div>
+                <div class="modal-body">
+                 <div class="form-group">
+                        <label>Выберите класс</label>
+                        <select class="form-control selectClick1">
+                            {% for item in classNumber %}
+                                <option value="{{ item.id }}">{{ item.number }} {{ item.letter }}</option>
+                            {% endfor %}
+                        </select><br />
+                        <label>Введите домашнее задание</label>
+                        <input class="form-control" type="text" id="name"><br />
+                        <label>Введите дату</label>
+                        <input class="form-control" type="date" id="date"><br />
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" id="addHomeWork" class="btn btn-success" data-dismiss="modal">Добавить</button>
+                        </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset("bundles/app/js/teachersScript.js") }}" type="text/javascript"></script>
+{% endblock %}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/bootstrap.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/bootstrap-theme.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/style.css') }}" type="text/css" />
+    <style>
+        body{
+            margin-top: 10px;
+        }
+    </style>
+    <script src="{{ asset('bundles/app/js/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/notify.js') }}"></script>
+</head>
+<body>
+<!----- start-header---->
+<div id="home" class="header two">
+    <div class="top-header two">
+        <div class="container">
+            <div class="logo">
+                <a href="/home"><h1>Радужская<span>Школа</span></h1></a>
+            </div>
+            <!----start-top-nav---->
+            <div class="top-menu">
+                <span class="menu"> </span>
+                <ul class="cl-effect-16">
+                    <li><a href="/home" data-hover="Домой">Домой</a></li>
+                    <li><a href="/gallery" data-hover="Галерея">Галерея</a></li>
+                    <li><a class="active" href="/contacts" data-hover="Контакты">Контакты</a></li>
+                    <li><a href="/login" data-hover="Электронный дневник">Электронный дневник</a></li>
+                    <div class="clearfix"></div>
+                </ul>
+            </div>
+            <!-- script-for-menu -->
+            <script>
+                $("span.menu").click(function(){
+                    $(".top-menu ul").slideToggle("slow" , function(){
+                    });
+                });
+            </script>
+            <!-- script-for-menu -->
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <div class="clearfix"> </div>
+</div>
+<!----- //End-slider---->
+<!--/contact-->
+<div class="contact">
+    <div class="container">
+        <div class="contact-head">
+            <h3>Контакты</h3>
+        </div>
+        <div class="contact-top">
+            <div class="col-md-4 contact-text">
+                <div class="cont-grid">
+                    <div class="con-icon">
+                        <i class="loca"> </i>
+                    </div>
+                    <div class="con-text">
+                        <h4>Школа</h4>
+                        <p>
+                            ул. Батракова 1а, 247122, а.г Радуга, Ветковский район, Гомельская область</p>
+                        <p>
+                            8(02330)3-43-71 </p>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="cont-grid">
+                    <div class="con-icon">
+                        <i class="mail"> </i>
+                    </div>
+                    <div class="con-text">
+                        <h4>E-mail</h4>
+                        <p>shkolaraduga@yandex.ru</p>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+
+            </div>
+            <div class="col-md-8 contact-form">
+                <form>
+                    <input type="text" class="textbox" value="Имя" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Имя';}">
+                    <input type="text" class="textbox" value="Электронный адрес" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Электронный адрес';}">
+                    <textarea value="Message:" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Сообщение';}">Сообщение</textarea>
+                    <input type="submit" value="Отправить">
+                </form>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="map">
+        <iframe src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJHclE9Tty1EYRACErgHrkz80&key=AIzaSyATn2_3_xMfCu2gXy0hjrEBiwIrwniq6cY"> </iframe>
+    </div>
+
+</div>
+<!----footer--->
+<div class="footer">
+    <div class="container">
+        <div class="copy">
+            <p>&copy; 2017 ГГТУ им. П.О. Сухого, Орещенко Е.Н. ИТ-41 </p>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/bootstrap.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/bootstrap-theme.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/style.css') }}" type="text/css" />
+    <style>
+        body{
+            margin-top: 10px;
+        }
+    </style>
+    <script src="{{ asset('bundles/app/js/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/notify.js') }}"></script>
+</head>
+<body>
+<div id="home" class="header two">
+    <div class="top-header two">
+        <div class="container">
+            <div class="logo">
+                <a href="/home"><h1>Радужская<span>Школа</span></h1></a>
+            </div>
+            <!----start-top-nav---->
+            <div class="top-menu">
+                <span class="menu"> </span>
+                <ul class="cl-effect-16">
+                    <li><a href="/home" data-hover="Домой">Домой</a></li>
+                    <li><a class="active" href="/gallery" data-hover="Галерея">Галерея</a></li>
+                    <li><a href="/contacts" data-hover="Контакты">Контакты</a></li>
+                    <li><a href="/login" data-hover="Электронный дневник">Электронный дневник</a></li>
+                    <div class="clearfix"></div>
+                </ul>
+            </div>
+            <!-- script-for-menu -->
+            <script>
+                $("span.menu").click(function(){
+                    $(".top-menu ul").slideToggle("slow" , function(){
+                    });
+                });
+            </script>
+            <!-- script-for-menu -->
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <div class="clearfix"> </div>
+</div>
+    <!--gallery-->
+    <div class="gallery services">
+        <div class="container">
+            <div class="gallery-head">
+                <h3>Галерея</h3>
+                <p>Наши дети</p>
+            </div>
+            <div class="portfolio-bottom">
+                <div class="gallery-one two">
+                    <div class="col-md-4 gallery-left two">
+                        <a title="В вихре вальса 2017">
+                            <img src="{{ asset('bundles/app/images/pic1.jpg') }}" alt="" class="img-responsive zoom-img"/>
+                        </a>
+                    </div>
+                    <div class="col-md-4 gallery-left two">
+                        <a title="День деревни">
+                            <img src="{{ asset('bundles/app/images/pic2.jpg') }}" alt="" class="img-responsive zoom-img"/>
+                        </a>
+                    </div>
+                    <div class="col-md-4 gallery-left two">
+                        <a title="Устный журнал Чернобыль - боль моей страны">
+                            <img src="{{ asset('bundles/app/images/pic3.jpg') }}" alt="" class="img-responsive zoom-img"/>
+                        </a>
+                    </div>
+                    <div class="col-md-4 gallery-left two">
+                        <a title="Малые олимпийские игры">
+                            <img src="{{ asset('bundles/app/images/pic4.jpg') }}" alt="" class="img-responsive zoom-img"/>
+                        </a>
+                    </div>
+                    <div class="col-md-4 gallery-left two">
+                        <a title="Школа научных чудес - для юных химиков">
+                            <img src="{{ asset('bundles/app/images/pic5.jpg') }}" alt="" class="img-responsive zoom-img"/>
+                        </a>
+                    </div>
+                    <div class="col-md-4 gallery-left two">
+                        <a title="Жизнь в лагере кипит...">
+                            <img src="{{ asset('bundles/app/images/pic6.jpg') }}" alt="" class="img-responsive zoom-img"/>
+                        </a>
+                    </div>
+                    <div class="col-md-4 gallery-left two">
+                        <a title="Предметная неделя в начальных классах. СВОЯ ИГРА- 1 класс">
+                            <img src="{{ asset('bundles/app/images/pic7.jpg') }}" alt="" class="img-responsive zoom-img"/>
+                        </a>
+                    </div>
+                    <div class="col-md-4 gallery-left two">
+                        <a title="Предметная неделя в начальных классах. Игра УРА! МАТЕМАТИКА!-3 класс">
+                            <img src="{{ asset('bundles/app/images/pic8.jpg') }}" alt="" class="img-responsive zoom-img"/>
+                        </a>
+                    </div>
+                    <div class="col-md-4 gallery-left two">
+                        <a title="Конкурс театральных коллективов Аркад">
+                            <img src="{{ asset('bundles/app/images/pic9.jpg') }}" alt="" class="img-responsive zoom-img"/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!----footer--->
+    <div class="footer">
+        <div class="container">
+            <div class="copy">
+                <p>&copy; 2017 ГГТУ им. П.О. Сухого, Орещенко Е.Н. ИТ-41 </p>
+            </div>
+
+        </div>
+    </div>
